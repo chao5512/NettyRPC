@@ -47,6 +47,8 @@ import java.util.concurrent.RejectedExecutionHandler;
  * @description:RpcThreadPool功能模块
  * @blogs http://www.cnblogs.com/jietang/
  * @since 2016/10/7
+ * 独立出线程池主要是为了应对复杂耗I/O操作的业务，不阻塞netty的handler线程而引入
+ * 当然如果业务足够简单，把处理逻辑写入netty的handler（ChannelInboundHandlerAdapter）也未尝不可
  */
 public class RpcThreadPool {
     private static final Timer TIMER = new Timer("ThreadPoolMonitor", true);

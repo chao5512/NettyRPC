@@ -35,7 +35,7 @@ public class NamedThreadFactory implements ThreadFactory {
 
     private final String prefix;
 
-    private final boolean daemoThread;
+    private final boolean daemonThread;
 
     private final ThreadGroup threadGroup;
 
@@ -47,9 +47,9 @@ public class NamedThreadFactory implements ThreadFactory {
         this(prefix, false);
     }
 
-    public NamedThreadFactory(String prefix, boolean daemo) {
+    public NamedThreadFactory(String prefix, boolean daemon) {
         this.prefix = StringUtils.isNotEmpty(prefix) ? prefix + "-thread-" : "";
-        daemoThread = daemo;
+        daemonThread = daemon;
         SecurityManager s = System.getSecurityManager();
         threadGroup = (s == null) ? Thread.currentThread().getThreadGroup() : s.getThreadGroup();
     }
@@ -58,7 +58,7 @@ public class NamedThreadFactory implements ThreadFactory {
     public Thread newThread(Runnable runnable) {
         String name = prefix + mThreadNum.getAndIncrement();
         Thread ret = new Thread(threadGroup, runnable, name, 0);
-        ret.setDaemon(daemoThread);
+        ret.setDaemon(daemonThread);
         return ret;
     }
 

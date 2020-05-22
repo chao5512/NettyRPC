@@ -40,6 +40,7 @@ public class MessageSendChannelInitializer extends ChannelInitializer<SocketChan
     @Override
     protected void initChannel(SocketChannel socketChannel) throws Exception {
         ChannelPipeline pipeline = socketChannel.pipeline();
+        // todo 这里使用了什么模式
         frame.select(protocol, pipeline);
     }
 }

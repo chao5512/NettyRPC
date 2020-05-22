@@ -49,6 +49,7 @@ public class RpcServerLoader {
     private static final String DELIMITER = RpcSystemConfig.DELIMITER;
     private RpcSerializeProtocol serializeProtocol = RpcSerializeProtocol.JDKSERIALIZE;
     private static final int PARALLEL = RpcSystemConfig.SYSTEM_PROPERTY_PARALLEL * 2;
+    //netty nio线程池
     private EventLoopGroup eventLoopGroup = new NioEventLoopGroup(PARALLEL);
     private static int threadNums = RpcSystemConfig.SYSTEM_PROPERTY_THREADPOOL_THREAD_NUMS;
     private static int queueNums = RpcSystemConfig.SYSTEM_PROPERTY_THREADPOOL_QUEUE_NUMS;
@@ -90,6 +91,7 @@ public class RpcServerLoader {
                         lock.lock();
 
                         if (messageSendHandler == null) {
+                            //Netty服务端链路没有建立完毕之前，先挂起等待
                             handlerStatus.await();
                         }
 
